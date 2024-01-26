@@ -1,0 +1,1256 @@
+{% extends 'cms_manager_app/base.html' %}
+{% block title %}CMS Home{% endblock %}
+
+{% block index %}
+<div class="container-fluid m-0 px-0 py-3">
+    <div class="card bg-blur shadow-lg p-lg-5 p-1 w-100">
+        <!-- DashBoard Card -->
+        <div class="card shadow bg-blur mt-lg-0 mt-3 mb-2">
+            <div class="card-header">
+                <h5 class="text-center"><i class="fa-solid fa-dashboard me-1"></i> DASHBOARD</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card bg-blur px-3 pt-3 shadow">
+                            <table class="table table-striped-columns table-hover text-center table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Staff(s) Present Today</td>
+                                        <td>{{ staff_present_today_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff(s) Absent Today</td>
+                                        <td>{{ staff_absent_today_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manager(s) Present Today</td>
+                                        <td>{{ manager_present_today_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manager(s) Absent Today</td>
+                                        <td>{{ manager_absent_today_count }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card bg-blur px-3 pt-3 shadow">
+                            <table class="table table-striped-columns table-hover text-center table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Staff(s)</td>
+                                        <td>{{ total_staff_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Manager(s)</td>
+                                        <td>{{ total_manager_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Dishes</td>
+                                        <td>{{ total_dishes_count }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Tables</td>
+                                        <td>{{ total_tables_count }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card bg-blur px-3 pt-3 shadow">
+                            <table class="table table-striped-columns table-hover text-center table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Profit ₹</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Today</td>
+                                        <td>{{ today_profit }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>This Month</td>
+                                        <td>{{ this_month_profit }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>This Year</td>
+                                        <td>{{ this_year_profit }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Previous Year</td>
+                                        <td>{{ previous_year_profit }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card bg-blur shadow">
+                    <div class="card-header text-center">
+                        <h4>Today Sales</h4>
+                    </div>
+                    <div class="card-body p-3 overflow-x-scroll" style="height: 360px; overflow-y: auto;">
+                        <table id="sales-table"
+                            class="table text-center table-striped table-bordered table-hover w-100 py-2">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Attended By</th>
+                                    <th>Table Name</th>
+                                    <th>Total Amount</th>
+                                    <th>Created At</th>
+                                    <th>Print</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be dynamically populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card shadow bg-blur mt-2 mt-lg-0">
+                    <div class="card-header text-center">
+                        <h4 class="mb-0">CMS ACTIONS</h4>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="card bg-blur">
+                                <div class="card-header text-center">
+                                    Staff Management
+                                </div>
+                                <div class="card-body">
+                                    <div class="btn-group w-100">
+                                        <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
+                                            data-bs-target="#StaffCreationModal">
+                                            ADD STAFF
+                                        </button>
+                                        <button type="button" class="btn btn-secondary EditStaffButton "
+                                            data-bs-toggle="modal" data-bs-target="#StaffEditModal">
+                                            EDIT STAFF
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card bg-blur">
+                                <div class="card-header text-center">
+                                    Table Management
+                                </div>
+                                <div class="card-body">
+                                    <div class="btn-group w-100">
+                                        <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
+                                            data-bs-target="#TableCreationModal">
+                                            ADD TABLE
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#TableEditModal">
+                                            EDIT TABLE
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card bg-blur">
+                                <div class="card-header text-center">
+                                    Dish Management
+                                </div>
+                                <div class="card-body">
+                                    <div class="btn-group w-100">
+                                        <button type="button" class="btn btn-primary me-1" data-bs-toggle="modal"
+                                            data-bs-target="#DishCreationModal">
+                                            ADD DISH
+                                        </button>
+                                        <button type="button" class="btn btn-secondary " data-bs-toggle="modal"
+                                            data-bs-target="#DishEditModal">
+                                            EDIT DISH
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-2">
+                <div class="card bg-blur shadow">
+                    <div class="card-header text-center">
+                        <h4 class="mb-0">TAKE ORDER</h4>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="card shadow bg-blur mb-3">
+                            <form method="POST" class="DishForm ">
+                                <div class="card-body p-3">
+                                    {% csrf_token %}
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="tableSelect">Table</label>
+                                        <select class="form-select" id="tableSelect" name="table" required>
+                                            <option selected disabled hidden value="0">SELECT TABLE</option>
+                                            {% for table in tables %}
+                                            <option value="{{ table.id }}">{{ table.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <!-- Dish Part -->
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="dishSelect">Dish</label>
+                                        <select class="form-select" id="dishSelect" name="dish" required>
+                                            <option selected disabled hidden value="0">SELECT DISH</option>
+                                            {% for dish in dishes %}
+                                            <option value="{{ dish.id }}">{{ dish.name }} ~ ₹{{ dish.price }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="quantity">Quantity</label>
+                                        <input class="form-control" type="number" name="quantity" id="quantity" min="1"
+                                            max="99" required>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="d-flex align-content-between justify-content-between p-2">
+                                        <button type="submit" class="btn btn-primary w-100">Add Dish</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card shadow bg-blur mt-3">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div
+                                        class="col-lg-6 col-sm-12 d-flex align-items-center justify-content-center justify-content-lg-start">
+                                        <h5 class="mb-0">TOTAL PAYABLE AMOUNT : <span class="total_payable">0</span>
+                                        </h5>
+                                    </div>
+                                    <div
+                                        class="col-lg-6 col-sm-12 d-flex align-items-center justify-content-center justify-content-lg-end">
+                                        <div class="btn-group">
+                                            <button type="button" id="submitOrderBtn"
+                                                class="btn btn-success me-1">Submit Order</button>
+                                            <a href="{% url 'manager-index' %}"
+                                                class="btn btn-outline-danger clear-table">Clear Table</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-3 overflow-x-scroll" style="max-height: 270px;">
+                                <table id="selectedDishesTable"
+                                    class="table text-center table-striped table-bordered table-hover w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>Dish</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total Amount</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="selectedDishesTableBody">
+                                        <!-- DataTable -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EDIT DISH QUANTITY MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="EditDishForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="edit_order_id" id="edit_order_id" value="">
+                    <div class="input-group mb-3 border border-danger-subtle rounded-2">
+                        <label class="input-group-text" for="tableSelect">Table</label>
+                        <select class="form-select" id="edittableSelect" name="table" disabled>
+                            <option selected disabled></option>
+                        </select>
+                    </div>
+                    <!-- Dish Part -->
+                    <div class="input-group mb-3 border border-danger-subtle rounded-2">
+                        <label class="input-group-text" for="dishSelect">Dish</label>
+                        <select class="form-select " id="editdishSelect" name="dish" disabled required>
+                            <option selected disabled></option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3 border border-success-subtle rounded-2">
+                        <label class="input-group-text" for="quantity">Quantity</label>
+                        <input class="form-control" type="number" name="quantity" id="editquantity" min="1" max="99">
+                    </div>
+                    <hr class="text-dark px-0 mx-0">
+                    <div class="d-flex align-content-end justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary me-1">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Staff Modal -->
+<div class="modal fade" id="StaffCreationModal" tabindex="-1" aria-labelledby="StaffCreationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="StaffCreationModalLabel">Details of Order-ID : <span
+                        id="table-header-id"></span></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h5>ADD NEW STAFF</h5>
+                    </div>
+                    <form method="POST" action="{% url 'register' %}" class="needs-validation registrationForm"
+                        novalidate>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i class="fa-solid fa-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="Username" name="username"
+                                            required>
+                                    </div>
+                                    <!--  -->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i class="fa-solid fa-at"></i></span>
+                                        <input type="email" class="form-control" placeholder="Email Address"
+                                            name="email" required>
+                                    </div>
+                                    <!--  -->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i class="fa-solid fa-key"></i></span>
+                                        <input type="password" class="form-control" placeholder="Password"
+                                            name="password" required>
+                                    </div>
+                                    <!--  -->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-repeat"></i></span>
+                                        <input type="password" class="form-control" placeholder="Re-Enter Password"
+                                            name="password1" required>
+                                    </div>
+                                    <!--  -->
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text bg-custom" for="user_group">
+                                            <i class="fa-solid fa-user-group"></i>
+                                        </label>
+                                        <select class="form-select" id="select-group" name="user_group" required>
+                                            <option value="" disabled selected hidden>Select Group</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Staff">Staff</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-location-dot"></i></span>
+                                        <textarea id="address" class="form-control" name="address" placeholder="Address"
+                                            rows="3" required></textarea>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-mountain-city"></i></span>
+                                        <input type="text" id="additional_info" class="form-control"
+                                            name="additional_info" placeholder="Additional Info ( LandMark )"
+                                            required />
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-hashtag"></i></span>
+                                        <input class="form-control" type="number" placeholder="Zip Code" name="zip_code"
+                                            id="zip_code" pattern="[0-9]+" required />
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-phone"></i></span>
+                                        <input class="form-control" type="number" placeholder="Phone Number"
+                                            name="phone_number" id="phone_number" pattern="[0-9]+" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-custom w-100">Register Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ADD TABLE MODAL -->
+<div class="modal fade" id="TableCreationModal" tabindex="-1" aria-labelledby="TableCreationModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="TableCreationModal">ADD NEW TABLE</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="AddTableForm needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="add_table_name">Table Name</label>
+                        <input type="text" class="form-control add_table_name" id="add_table_name" name="add_table_name"
+                            required>
+                    </div>
+                    <hr class="text-dark px-0 mx-0">
+                    <div class="d-flex align-content-end justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary me-1">ADD TABLE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD DISH MODAL -->
+<div class="modal fade" id="DishCreationModal" tabindex="-1" aria-labelledby="DishCreationModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="DishCreationModal">ADD NEW DISH</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="AddDishForm needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="add_dish_name">Dish Name</label>
+                        <input type="text" class="form-control add_dish_name" id="add_dish_name" name="add_dish_name"
+                            required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="add_dish_price">Dish Price</label>
+                        <input type="number" class="form-control add_dish_price" id="add_dish_price" pattern="[0-9]+"
+                            min="0" max="2000" name="add_dish_price" required>
+                    </div>
+                    <hr class="text-dark px-0 mx-0">
+                    <div class="d-flex align-content-end justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary me-1">ADD DISH</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EDIT MODALS -->
+<!-- Edit Staff Modal -->
+<div class="modal fade" id="StaffEditModal" tabindex="-1" aria-labelledby="StaffEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="StaffEditModalLabel">Details of Order-ID : <span
+                        id="table-header-id"></span></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h5>Update <span id="edit-username-title">Staff</span></h5>
+                    </div>
+                    <!-- Select Staff -->
+                    <form type="POST" class="needs-validation StaffUpdationForm">
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="staffSelect">Staff</label>
+                            <select class="form-select" id="staffSelect" name="dish" required>
+                                <option selected disabled hidden value="0">SELECT STAFF</option>
+                                {% for staff in staffs %}
+                                <option value="{{ staff.id }}">{{ staff.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                    <!-- Fill Staff Details -->
+                    <form method="POST" class="needs-validation UpdateStaffForm" novalidate>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="hidden" name="user-id" id="user-id" value="">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i class="fa-solid fa-user"></i></span>
+                                        <input type="text" class="form-control" placeholder="Username"
+                                            name="edit-username" id="edit-username" required disabled>
+                                    </div>
+                                    <!--  -->
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i class="fa-solid fa-at"></i></span>
+                                        <input type="email" class="form-control" placeholder="Email Address"
+                                            name="edit-email" id="edit-email" required disabled>
+                                    </div>
+                                    <!--  -->
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text bg-custom" for="user_group">
+                                            <i class="fa-solid fa-user-group"></i>
+                                        </label>
+                                        <select class="form-select" id="edit-user-group" name="edit-user-group" required
+                                            disabled>
+                                            <option value="" disabled selected hidden>Select Group</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Staff">Staff</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-phone"></i></span>
+                                        <input class="form-control" type="number" placeholder="Phone Number"
+                                            name="edit-phone-number" id="edit-phone-number" pattern="[0-9]+" required
+                                            disabled />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-location-dot"></i></span>
+                                        <textarea id="edit-address" class="form-control" name="edit-address"
+                                            placeholder="Address" rows="3" required disabled></textarea>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-mountain-city"></i></span>
+                                        <input type="text" id="edit-additional-info" class="form-control"
+                                            name="edit-additional-info" placeholder="Additional Info ( LandMark )"
+                                            required disabled />
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text bg-custom"><i
+                                                class="fa-solid fa-hashtag"></i></span>
+                                        <input class="form-control" type="number" placeholder="Zip Code"
+                                            name="edit-zip-code" id="edit-zip-code" pattern="[0-9]+" required
+                                            disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-custom w-100 update-account-btn disabled">Update
+                                Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT TABLE MODAL -->
+<div class="modal fade" id="TableEditModal" tabindex="-1" aria-labelledby="TableEditModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="TableEditModal">EDIT <span id="edit_table_name"></span></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Select Table -->
+                <form type="POST" class="needs-validation TableUpdationForm">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="UpdatetableSelect">Table</label>
+                        <select class="form-select" id="UpdatetableSelect" name="UpdatetableSelect" required>
+                            <option selected disabled hidden value="0">SELECT TABLE</option>
+                            {% for table in tables %}
+                            <option value="{{ table.id }}">{{ table.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+                <form method="POST" class="UpdateTableForm needs-validation" novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" name="table_id" id="table_id">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="update_table_name">Table Name</label>
+                        <input type="text" class="form-control update_table_name" id="update_table_name"
+                            name="update_table_name" required disabled>
+                    </div>
+                    <hr class="text-dark px-0 mx-0">
+                    <div class="d-flex align-content-end justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-custom me-1 update-table-btn disabled">UPDATE
+                            TABLE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT DISH MODAL -->
+<div class="modal fade" id="DishEditModal" tabindex="-1" aria-labelledby="DishEditModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="DishEditModal">EDIT <span id="edit_dish_name"></span></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Select Dish -->
+                <form type="POST" class="needs-validation DishUpdationForm" novalidate>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="UpdatedishSelect">DISH</label>
+                        <select class="form-select" id="UpdatedishSelect" name="UpdatedishSelect" required>
+                            <option selected disabled hidden value="0">SELECT DISH</option>
+                            {% for dish in dishes %}
+                            <option value="{{ dish.id }}">{{ dish.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+                <form method="POST" class="UpdateDishForm needs-validation" novalidate>
+                    {% csrf_token %}
+                    <input type="hidden" name="dish_id" id="dish_id">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="update_dish_name">Dish Name</label>
+                        <input type="text" class="form-control update_dish_name" id="update_dish_name"
+                            name="update_dish_name" required disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="update_dish_name">Dish Price</label>
+                        <input type="number" class="form-control update_dish_price" id="update_dish_price"
+                            pattern="[0-9]+" name="update_dish_price" required disabled>
+                    </div>
+                    <hr class="text-dark px-0 mx-0">
+                    <div class="d-flex align-content-end justify-content-end">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-custom me-1 update-dish-btn disabled">UPDATE DISH</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Print Modal -->
+<div class="modal fade" id="PrintPreviewModal" tabindex="-1" aria-labelledby="PrintPreviewModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="PrintPreviewModalLabel">Print Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body print-modal-body">
+                <div class="card shadow border border-dark">
+                    <div
+                        class="card-header  d-flex justify-content-between align-items-center p-3 border-bottom border-dark">
+                        <h5 class="m-0">CMS</h5>
+                        <h5 class="m-0 text-uppercase">Billing Information</h5>
+                    </div>
+                    <div class="card-body border-bottom border-dark">
+                        <div class="d-flex justify-content-between align-items-center p-1">
+                            <p class="card-text m-0">Table: <strong id="table-name"></strong></p>
+                            <p class="card-text m-0">Attended By: <strong id="attended-by"></strong></p>
+                        </div>
+                        <hr class="px-0 mx-0 w-100 text-dark">
+                        <p class="card-text">Dishes:</p>
+                        <table id="order-details-table" class="table table-bordered table-hover border-dark">
+                            <thead>
+                                <tr>
+                                    <th class="col text-center">Item Name</th>
+                                    <th class="col w-25 text-center">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-details-body">
+                                <!-- Data will be populated here dynamically -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-end me-3">
+                                        <h6>Grand Total: <span class="h5" id="total-amount"></span></h6>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="card-footer text-center">
+                        <h5 class="text-uppercase">Thank you visit again</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-success confirm-print-btn">CONFIRM PRINT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        // Form Validation Script
+        (function () {
+            'use strict';
+
+            var forms = document.querySelectorAll('.needs-validation');
+
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+        // DataTable Script
+        $('#selectedDishesTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "paging": false,
+            "dom": "<'row'<'col-sm-12'tr>>",
+            "ajax": "{% url 'temp-order-list' %}",
+            "columns": [
+                { "data": "dish_name" },
+                { "data": "price" },
+                { "data": "quantity" },
+                { "data": "total_amount" },
+                { "data": "action" }
+            ],
+        });
+        // Sales Order
+        $('#sales-table').DataTable({
+            "ajax": {
+                "url": "{% url 'get-today-order' %}",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "attended_by" },
+                { "data": "table_name" },
+                { "data": "total_amount" },
+                { "data": "created_at" },
+                {
+                    "data": null,
+                    "render": function (data, type, row) {
+                        return '<button class="btn btn-primary printbtn" data-order-id="' + data.id + '"><i class="fa-solid fa-print me-2"></i>Print</button>';
+                    }
+                }
+            ]
+        });
+
+        // Reset Form On every Reload
+        $('.DishForm').trigger("reset");
+        $('.DishForm select').trigger("change");
+
+        // Make the user type only the number 
+        $('input[type="number"]').on('input', function () {
+            // Get the current value of the input
+            let value = $(this).val();
+
+            // Remove any non-numeric characters using a regular expression
+            let newValue = value.replace(/\D/g, '');
+
+            // Update the input value with the cleaned value
+            $(this).val(newValue);
+        });
+        // Get CSRF Token
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        $.ajaxSetup({
+            headers: { 'X-CSRFToken': $("[name=csrfmiddlewaretoken]").val() },
+        });
+
+        $('.DishForm').on('submit', function (e) {
+            e.preventDefault();
+            var formData = {
+                table: $('#tableSelect').val().trim(),
+                dish: $('#dishSelect').val().trim(),
+                quantity: $('#quantity').val().trim()
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "temp-order" %}',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    $('.total_payable').text(data.order_total_amount);
+                    $('#tableSelect').prop('disabled', true);
+                    $('#selectedDishesTable').DataTable().clear().draw();
+                    $('#quantity').val('');
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "Failed to submit order: " + error, "error");
+                }
+            });
+
+        });
+        // Delete
+        $('#selectedDishesTable').on('click', '.deleteBtn', function () {
+            var order_id = $(this).data('dish-id');
+
+            // Display a confirmation dialog using swal
+            swal.fire({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this order!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // User confirmed, proceed with the delete action
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '{% url "delete-temp-order" 0 %}'.replace(0, order_id),
+                        success: function (data) {
+                            $('#selectedDishesTable').DataTable().clear().draw();
+                            $('.total_payable').text(data.order_total_amount);
+                            swal.fire("Deleted!", "Your order has been deleted.", "success");
+                        },
+                        error: function (xhr, status, error) {
+                            swal.fire("Error", "Failed to delete item: " + error, "error");
+                        }
+                    });
+                } else {
+                    swal.fire("Cancelled", "Your order is safe :)", "info");
+                }
+            });
+        });
+        // Get Edit Data
+        $('#selectedDishesTable').on('click', '.editBtn', function () {
+            var order_id = $(this).data('dish-id');
+            $.ajax({
+                type: 'GET',
+                url: '{% url "edit-temp-order" 0 %}'.replace(0, order_id),
+                success: function (data) {
+                    $('#edit_order_id').val(data.order_id);
+                    $('#edittableSelect').empty();
+                    $('#edittableSelect').append($('<option>', {
+                        value: data.table.id,
+                        text: data.table.name
+                    }));
+
+                    $('#editdishSelect').empty();
+                    $('#editdishSelect').append($('<option>', {
+                        value: data.dish,
+                        text: data.dish
+                    }));
+                    $('#editquantity').val(data.quantity);
+                    $('#editModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "Failed to Get Selected Item's data: " + error, "error");
+                }
+            });
+        });
+
+        // Update Data
+        $('.EditDishForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var order_id = $('#edit_order_id').val();
+            var update_quantity = $('#editquantity').val().trim();
+            var csrfToken = getCookie('csrftoken');
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'update-temp-dish' 0 %}".replace(0, order_id),
+                data: {
+                    'update_quantity': update_quantity,
+                },
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                success: function (data) {
+                    $('.total_payable').text(data.order_total_amount);
+                    $('#selectedDishesTable').DataTable().clear().draw();
+                    $('#editModal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "Failed to Update Selected Item: " + error, "error");
+                },
+            });
+        });
+
+        // Submit Final Order
+        $('#submitOrderBtn').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'order-list' %}",
+                success: function (data) {
+                    swal.fire("Success", "Order submitted successfully!", "success").then(function () {
+                        $('.DishForm').trigger("reset");
+                        $('.DishForm select').trigger("change");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 100);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "Failed to submit order: " + error, "error");
+                },
+            });
+        });
+
+        // Managements
+        // Add Staff 
+        $('.registrationForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var formData = {
+                username: $('input[name=username]').val().trim(),
+                password: $('input[name=password]').val(),
+                password1: $('input[name=password1]').val(),
+                email: $('input[name=email]').val().trim(),
+                phone_number: $('input[name=phone_number]').val().trim(),
+                user_group: $('#select-group').val(),
+                address: $('#address').val().trim(),
+                additional_info: $('#additional_info').val().trim(),
+                zip_code: $('#zip_code').val().trim(),
+            };
+
+            // Define an array to store validation errors
+            var validationErrors = [];
+
+            // Iterate over the form data and perform validation checks
+            for (var key in formData) {
+                if (formData.hasOwnProperty(key)) {
+                    if (formData[key] === "") {
+                        validationErrors.push("Please enter a value for " + key.replace(/_/g, ' '));
+                    }
+                }
+            }
+
+            // If there are validation errors, display them and stop form submission
+            if (validationErrors.length > 0) {
+                swal.fire('Error', 'Please fill all the Input fields', 'error');
+                return;
+            }
+
+            // If all validations pass, make the AJAX request
+            $.ajax({
+                type: 'POST',
+                url: '{% url "register" %}',
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.success) {
+                        swal.fire("Success", data.message, "success").then(function () {
+                            $('.registrationForm')[0].reset();
+                            location.reload();
+                        });
+                    } else {
+                        swal.fire("Error", data.message, "error");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "An error occurred while processing your request.", "error");
+                }
+            });
+        });
+
+
+        // Add Table
+        $('.AddTableForm').on('submit', function (e) {
+            e.preventDefault();
+            var table_name = $('.add_table_name').val();
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'add-table' %}",
+                data: { 'table_name': table_name },
+                success: function () {
+                    swal.fire("Success", "Table Created successfully!", "success");
+                    $('.AddTableForm').trigger("reset");
+                    $('#TableCreationModal').modal('hide');
+                },
+                error: function () {
+                    swal.fire("Error", "Error Creating Table!", "error");
+                },
+            });
+        });
+
+        // Add Dish
+        $('.AddDishForm').on('submit', function (e) {
+            e.preventDefault();
+            var dish_name = $('input[name=add_dish_name]').val().trim();
+            var dish_price = $('input[name=add_dish_price]').val().trim();
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'add-dish' %}",
+                data: {
+                    'dish_name': dish_name,
+                    'dish_price': dish_price,
+                    'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+                },
+                success: function (data) {
+                    swal.fire('Success', 'Dish "' + dish_name + '" added successfully.', 'success');
+                    $('.AddDishForm').trigger("reset");
+                    $('#DishCreationModal').modal('hide');
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    swal.fire('Error', 'Error occurred while adding a new dish: ' + error, 'error');
+                },
+            });
+        });
+
+        // Edit Staff 
+        $('#staffSelect').change(function () {
+            var staffId = $(this).val();
+            if (!staffId || staffId === "0" || staffId === 'null') {
+                return;
+            } else {
+                $.ajax({
+                    url: "{% url 'user-detail' %}",
+                    method: 'GET',
+                    data: { staff_id: staffId },
+                    success: function (data) {
+                        $('#user-id').val(data.id);
+                        $('#edit-username-title').text(data.username);
+                        $('#edit-username').val(data.username);
+                        $('#edit-email').val(data.email);
+                        $('#edit-phone-number').val(data.phone_number);
+                        $('#edit-address').val(data.address);
+                        $('#edit-additional-info').val(data.additional_info);
+                        $('#edit-zip-code').val(data.zip_code);
+                        $('#edit-user-group').val(data.user_group).trigger('change');
+                        $('.UpdateStaffForm input, .UpdateStaffForm select, .UpdateStaffForm textarea, .UpdateStaffForm button[type="submit"]').prop('disabled', false);
+                        $('.update-account-btn').removeClass('disabled');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+
+        // Update Staff
+        // Reset Modal on page Refresh
+        $('.UpdateStaffForm')[0].reset();
+        $('.StaffUpdationForm select').val('0').trigger('change');
+        // Send Ajax
+        $('.UpdateStaffForm').on('submit', function (e) {
+            e.preventDefault();
+            var staffId = $('#user-id').val().trim();
+            console.log(staffId);
+            var formData = {
+                username: $('#edit-username').val().trim(),
+                email: $('#edit-email').val().trim(),
+                phone_number: $('#edit-phone-number').val().trim(),
+                user_group: $('#select-group').val().trim(),
+                address: $('#edit-address').val().trim(),
+                additional_info: $('#edit-additional-info').val().trim(),
+                zip_code: $('#edit-zip-code').val().trim(),
+            }
+            // If all validations pass, make the AJAX request
+            $.ajax({
+                type: 'POST',
+                url: '{% url "edit-user-detail" 0 %}'.replace(0, staffId),
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    swal.fire("Success", data.message, "success");
+                    $('.UpdateStaffForm')[0].reset();
+                    $('.StaffUpdationForm select').val('0').trigger('change');
+                    $('#StaffEditModal').modal('hide');
+                    $('.UpdateStaffForm input, .UpdateStaffForm select, .UpdateStaffForm textarea, .UpdateStaffForm button[type="submit"]').prop('disabled', true);
+                    $('.update-account-btn').addClass('disabled');
+
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "An error occurred while processing your request.", "error");
+                },
+            });
+        });
+
+        // Edit Table 
+        $('#UpdatetableSelect').change(function () {
+            var tableId = $(this).val();
+            if (!tableId || tableId === "0" || tableId === 'null') {
+                return;
+            } else {
+                $.ajax({
+                    url: "{% url 'edit-table' %}",
+                    method: 'POST',
+                    data: { 'table_id': tableId },
+                    success: function (data) {
+                        $('#table_id').val(data.id);
+                        $('#update_table_name').val(data.table_name);
+                        $('#update_table_name').prop('disabled', false);
+                        $('.update-table-btn').removeClass('disabled');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+        // Update Table
+        $('.UpdateTableForm')[0].reset();
+        $('.TableUpdationForm select').val('0').trigger('change');
+        // Send Ajax
+        $('.UpdateTableForm').on('submit', function (e) {
+            e.preventDefault();
+            var tableId = $('#table_id').val();
+            console.log(tableId);
+            var table_name = $('#update_table_name').val().trim();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "update-table" 0 %}'.replace(0, tableId),
+                data: {
+                    'table_name': table_name,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    swal.fire("Success", data.message, "success");
+                    $('.UpdateTableForm')[0].reset();
+                    $('.TableUpdationForm select').val('0').trigger('change');
+                    $('#TableEditModal').modal('hide');
+                    $('.update_table_name').prop('disabled', true);
+                    $('.update-table-btn').addClass('disabled');
+                },
+                error: function (xhr, status, error) {
+                    swal.fire("Error", "An error occurred while processing your request.", "error");
+                },
+            });
+        });
+
+        // Edit DIsh 
+        $('#UpdatedishSelect').change(function () {
+            var dishId = $(this).val();
+            if (!dishId || dishId === "0" || dishId === 'null') {
+                return;
+            } else {
+                $.ajax({
+                    url: "{% url 'edit-dish' %}",
+                    method: 'POST',
+                    data: { 'dish_id': dishId },
+                    success: function (data) {
+                        $('#dish_id').val(data.id);
+                        $('#update_dish_name').val(data.dish_name);
+                        $('#update_dish_price').val(data.dish_price);
+                        $('#update_dish_name, #update_dish_price').prop('disabled', false);
+                        $('.update-dish-btn').removeClass('disabled');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        });
+        // Update Dish
+        $('.UpdateDishForm')[0].reset();
+        $('.DishUpdationForm select').val('0').trigger('change');
+        // Send Ajax
+        $('.UpdateDishForm').on('submit', function (e) {
+            e.preventDefault();
+            var dishId = $('#dish_id').val();
+            var dish_name = $('#update_dish_name').val().trim();
+            var dish_price = $('#update_dish_price').val().trim();
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "update-dish" 0 %}'.replace(0, dishId),
+                data: {
+                    'dish_name': dish_name,
+                    'dish_price': dish_price,
+                },
+                dataType: 'json',
+                success: function (data) {
+                    swal.fire("Success", data.message, "success");
+                    $('.UpdateDishForm')[0].reset();
+                    $('.DishUpdationForm select').val('0').trigger('change');
+                    $('#DishEditModal').modal('hide');
+                    $('.update_dish_name').prop('disabled', true);
+                    $('.update-dish-btn').addClass('disabled');
+                },
+                error: function (xhr, status, error, data) {
+                    swal.fire("Error", data.message, "error");
+                },
+            });
+        });
+        $(document).on('click', '.printbtn', function () {
+            var order_id = $(this).data('order-id');
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'print-preview' %}",
+                data: { 'order_id': order_id },
+                success: function (data) {
+                    $('#table-name').text(data.table);
+                    $('#attended-by').text(data.attended_by);
+                    var tableBody = $('#order-details-body');
+                    tableBody.empty();
+                    data.dishes.forEach(function (dish) {
+                        tableBody.append('<tr><td>' + dish.name + '</td><td>' + dish.price + '</td></tr>');
+                    });
+                    $('#total-amount').text(data.total_amount);
+                    $('#PrintPreviewModal').modal('show');
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error:", error);
+                }
+            });
+        });
+        $('.confirm-print-btn').on('click', function () {
+            var printWindow = window.open('', '_blank');
+            var modalContent = $('.print-modal-body').clone();
+
+            printWindow.document.write('<html><head><title>Print</title>');
+            printWindow.document.write('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<div class="container">');
+            printWindow.document.write('<h1 class="text-center">Cafe Management System</h1>');
+            printWindow.document.write(modalContent.html());
+            printWindow.document.write('</div>');
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            printWindow.close();
+        });
+    });
+
+</script>
+{% endblock index %}

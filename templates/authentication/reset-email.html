@@ -1,0 +1,91 @@
+{% extends 'authentication/base.html' %}
+{% block title %}Password Reset Page{% endblock %}
+
+{% block reset-email %}
+<div class="container-fluid py-5 d-flex justify-content-center align-items-center">
+    <div class="card bg-blur mt-5 mt-lg-0 text-white border border-white">
+        <div class="card-header  d-flex justify-content-between align-items-center p-3 border-bottom">
+            <h5 class="m-0">CMS</h5>
+            <h5 class="m-0">RESET YOUR PASSWORD</h5>
+        </div>
+        <div class="card-body shadow p-lg-5 m-lg-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <h2>Forgot your password?</h2>
+                        <p>Change your password in three easy steps. This will help you to secure your password!</p>
+                    </div>
+                    <div class="d-flex align-content-center justify-content-center">
+                        <ol>
+                            <li>Enter your email address below.</li>
+                            <li>Our system will send you a temporary
+                                link</li>
+                            <li>Use the link to reset your password
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+                <hr class="text-light">
+                <div class="col-12 p-lg-3">
+                    <h5>Enter Your Email Address:</h5>
+                    <form method="POST" class="reset-password-form needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                            <input class="form-control" type="email" placeholder="Enter Email" name="email" id="email"
+                                required />
+                        </div>
+                        <button type="submit" class="btn btn-custom w-100">Request Mail</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+    function handleMessages() {
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: "{{ message|safe }}",
+        });
+        {% elif message.tags == 'error' %}
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ message|safe }}",
+        });
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    }
+
+    // Call the function to handle messages when the document is ready
+    document.addEventListener("DOMContentLoaded", function () {
+        handleMessages();
+    });
+
+</script>
+
+{% endblock %}

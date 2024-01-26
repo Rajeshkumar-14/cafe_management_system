@@ -1,0 +1,140 @@
+:root {
+    --bg-white: #fff;
+    --bg-dark: #333;
+    --text-white: #fff;
+    --text-dark: #333;
+    --primary-color: #ff7c2b;
+    --secondary-color: #b16a00;
+    --primary-font: 'Poppins', sans-serif;
+    --secondary-font: 'Open Sans', sans-serif;
+}
+.bg-custom{
+    background: var(--primary-color) !important;
+}
+/* Custom Buttons */
+.btn-custom {
+    background-color: var(--primary-color) !important;
+    color: var(--bg-white) !important;
+    border: 1px solid transparent !important;
+    padding: 8px 16px !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: var(--secondary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+    color: var(--bg-white) !important;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-custom {
+    background-color: transparent !important;
+    color: var(--bg-white) !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border: 1px solid var(--primary-color) !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--bg-dark) !important;
+    transition: all 0.3s ease;
+
+}
+
+.btn-transparent {
+    background-color: transparent !important;
+    color: var(--text-white) !important;
+    border: 0.5px solid transparent !important;
+    padding: 8px 16px !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-transparent:hover {
+    color: var(--text-dark) !important;
+    background: var(--primary-color) !important;
+    border: 0.5px solid var(--primary-color) !important;
+    border-radius: 5px !important;
+    transition: all 0.3s ease;
+}
+
+.bg-blur {
+    background-color: transparent !important;
+    backdrop-filter: blur(35px) !important;
+}
+
+.bg-blur-lg {
+    background-color: transparent !important;
+    backdrop-filter: blur(50px) !important;
+}
+
+/* END */
+
+/* CUSTOM SCROLL */
+::-webkit-scrollbar {
+    width: 0.25rem;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: greenyellow;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+/* END */
+/* Dark theme button styles */
+.btn-outline-custom-dark {
+    background-color: transparent !important;
+    color: var(--text-white) !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border: 1px solid var(--primary-color) !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-custom-dark:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--text-dark) !important;
+    transition: all 0.3s ease;
+}
+
+/* END */
+
+/* Light theme button styles */
+.btn-outline-custom-light {
+    background-color: transparent !important;
+    color: var(--text-dark) !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border: 1px solid var(--primary-color) !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-custom-light:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--text-white) !important;
+    transition: all 0.3s ease;
+}
+
+/* END */

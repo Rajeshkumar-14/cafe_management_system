@@ -1,0 +1,84 @@
+{% extends 'authentication/base.html' %}
+{% block title %}Login Page{% endblock %}
+{% load static %}
+
+{% block login %}
+<div class="container-fluid py-5 d-flex justify-content-center">
+    <div class="card bg-blur text-light mt-5 border border-white shadow-lg">
+        <div class="card-header text-center p-3 border-bottom">
+            <h2>LOGIN TO ACCOUNT</h2>
+        </div>
+        <div class="card-body shadow m-lg-5">
+            <form method="POST" action="{% url 'login' %}" class="needs-validation" novalidate>
+                <h6 class="text-center text-white-50 m-0">INPUT YOUR CREDENTIALS</h6>
+                {% csrf_token %}
+                <div class="mb-5 mt-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-custom"><i class="fa-solid fa-at"></i></span>
+                        <input type="email" class="form-control" placeholder="Email Address" name="email" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-custom"><i class="fa-solid fa-key"></i></span>
+                        <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    </div>
+                </div>
+                <hr class="text-white">
+                <div class="row">
+                    <div class="col-lg-6 col-12 mb-3 mb-lg-0 ">
+                        <button type="submit" class="btn btn-custom w-100"><i
+                                class="fa-solid fa-right-to-bracket text-dark me-2"></i>Log In</button>
+                    </div>
+                    <div class="col-lg-6 col-12 ">
+                        <a href="{% url 'reset-password' %}" class="btn btn-sm btn-outline-custom w-100">FORGET PASSWORD</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock login %}
+{% block script %}
+<script>
+    (function () {
+            'use strict';
+
+            var forms = document.querySelectorAll('.needs-validation');
+
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    function handleMessages() {
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: "{{ message|safe }}",
+        });
+        {% elif message.tags == 'error' %}
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: "{{ message|safe }}",
+        });
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    }
+
+    // Call the function to handle messages when the document is ready
+    document.addEventListener("DOMContentLoaded", function () {
+        handleMessages();
+    });
+</script>
+{% endblock script %}

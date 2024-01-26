@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&display=swap');
+
+:root {
+    --bg-white: #fff;
+    --bg-dark: #333;
+    --text-white: #fff;
+    --text-dark: #333;
+    --primary-color: #ff7c2b;
+    --secondary-color: #b16a00;
+    --primary-font: 'Poppins', sans-serif;
+    --secondary-font: 'Open Sans', sans-serif;
+}
+
+* {
+    font-family: var(--primary-font);
+}
+
+body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.195), rgba(4, 7, 23, 0.205)), url("../images/green-bg.jpg") !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+section {
+    padding-top: 3rem;
+}
+
+.navbar-brand:hover {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    color: var(--text-white) !important;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background: var(--primary-color) !important;
+    color: var(--bg-white) !important;
+}
+
+/* Custom nav pills */
+.custom-nav-pills .nav-link {
+    background-color: transparent !important;
+    margin-right: 10px;
+    padding: 0px 0px;
+    border: 1px solid transparent;
+    border-radius: 25px;
+}
+
+.custom-nav-pills .nav-link.active,
+.custom-nav-pills .nav-link:hover {
+    color: var(--bg-white) !important;
+    background-color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
